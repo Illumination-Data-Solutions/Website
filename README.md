@@ -1,18 +1,18 @@
-# Flomatexs Construction Limited
+# Illumination Data Solutions
 
-Welcome to the Flomatexs Construction Limited GitHub repository! This repository contains various resources and documentation related to our construction projects and services.
+Welcome to the Illumination Data Solutions GitHub repository! This repository contains a collection of resources, tools, and documentation related to our data science projects and consulting services.
 
 ## About Us
 
-Flomatexs Construction Limited is a leading construction company with over 15 years of experience in delivering excellence. Our team of skilled professionals is committed to exceeding expectations and setting new standards of craftsmanship in the construction industry. From residential developments to commercial complexes, industrial facilities, and infrastructure projects, we have successfully completed a wide range of projects, earning a reputation for reliability, integrity, and superior quality.
+Illumination Data Solutions is a premier data science consulting firm with over 15 years of expertise in delivering innovative, data-driven solutions. Our team of skilled professionals is dedicated to exceeding client expectations and setting new standards in analytics and insights. From predictive modeling to business optimization, custom dashboards, and machine learning implementations, we have successfully executed diverse projects, earning a reputation for reliability, integrity, and transformative results.
 
 ## Projects
 
-Explore our portfolio of completed projects to see examples of our work and the diverse sectors we serve. Each project showcases our expertise, innovation, and dedication to customer satisfaction.
+Explore our portfolio of completed projects to discover how we empower businesses across diverse industries. Each project highlights our expertise, innovative approach, and commitment to delivering data-driven solutions that exceed expectations and drive measurable success.
 
 ## Services
 
-Learn more about the services we offer, including construction management, design-build, general contracting, and more. Our comprehensive range of services is tailored to meet the unique needs of each client and project.
+Discover the range of services we provide, including data analysis, predictive modeling, machine learning solutions, dashboard development, and more. Our comprehensive offerings are tailored to meet the unique needs of each client, helping them unlock the full potential of their data.
 
 ## Get in Touch
 
