@@ -1,21 +1,15 @@
 import os
-import time
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
-
-IMG_DIRECTORY = "img"
 
 def list_images(directory):
     return [f for f in os.listdir(directory) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
 
-def switch_image_names(directory, name1, name2):
-    path1 = os.path.join(directory, name1)
-    path2 = os.path.join(directory, name2)
-
-    if not os.path.exists(path1) or not os.path.exists(path2):
-        messagebox.showerror("Error", "One or both of the specified images do not exist.")
-        return
+def switch_image_names(path1, path2):
+    directory = os.path.dirname(path1)
+    name1 = os.path.basename(path1)
+    name2 = os.path.basename(path2)
 
     temp_name = "temp_image_name"
     os.rename(path1, os.path.join(directory, temp_name))
@@ -23,45 +17,47 @@ def switch_image_names(directory, name1, name2):
     os.rename(os.path.join(directory, temp_name), path2)
     messagebox.showinfo("Success", f"Switched names: {name1} <-> {name2}")
 
-def delete_image(directory, name):
-    path = os.path.join(directory, name)
+def delete_image(path):
     if os.path.exists(path):
         os.remove(path)
-        messagebox.showinfo("Success", f"Deleted image: {name}")
+        messagebox.showinfo("Success", f"Deleted image: {os.path.basename(path)}")
     else:
-        messagebox.showerror("Error", f"Image {name} does not exist.")
+        messagebox.showerror("Error", f"Image {os.path.basename(path)} does not exist.")
 
 def display_images():
-    images = list_images(IMG_DIRECTORY)
-    if not images:
-        messagebox.showinfo("Info", "No images found in the directory.")
-        return
+    def select_image1():
+        path = filedialog.askopenfilename()
+        if path:
+            image1_var.set(path)
+            update_image_display()
+
+    def select_image2():
+        path = filedialog.askopenfilename()
+        if path:
+            image2_var.set(path)
+            update_image_display()
 
     def on_switch():
-        name1 = image1_var.get()
-        name2 = image2_var.get()
-        switch_image_names(IMG_DIRECTORY, name1, name2)
-        refresh_images()
+        path1 = image1_var.get()
+        path2 = image2_var.get()
+        switch_image_names(path1, path2)
+        update_image_display()
 
     def on_delete1():
-        name1 = image1_var.get()
-        delete_image(IMG_DIRECTORY, name1)
-        refresh_images()
+        path1 = image1_var.get()
+        delete_image(path1)
+        image1_var.set("")
+        update_image_display()
 
     def on_delete2():
-        name2 = image2_var.get()
-        delete_image(IMG_DIRECTORY, name2)
-        refresh_images()
-
-    def refresh_images():
-        images = list_images(IMG_DIRECTORY)
-        image1_var.set(images[0] if images else "")
-        image2_var.set(images[1] if len(images) > 1 else "")
+        path2 = image2_var.get()
+        delete_image(path2)
+        image2_var.set("")
         update_image_display()
 
     def update_image_display():
-        img1_path = os.path.join(IMG_DIRECTORY, image1_var.get())
-        img2_path = os.path.join(IMG_DIRECTORY, image2_var.get())
+        img1_path = image1_var.get()
+        img2_path = image2_var.get()
 
         if os.path.exists(img1_path):
             img1 = Image.open(img1_path)
@@ -84,14 +80,14 @@ def display_images():
     root = tk.Tk()
     root.title("Image Manager")
 
-    image1_var = tk.StringVar(value=images[0] if images else "")
-    image2_var = tk.StringVar(value=images[1] if len(images) > 1 else "")
+    image1_var = tk.StringVar()
+    image2_var = tk.StringVar()
 
-    tk.Label(root, text="Image 1:").grid(row=0, column=0)
-    tk.OptionMenu(root, image1_var, *images).grid(row=0, column=1)
+    tk.Button(root, text="Select Image 1", command=select_image1).grid(row=0, column=0)
+    tk.Entry(root, textvariable=image1_var, width=50).grid(row=0, column=1)
 
-    tk.Label(root, text="Image 2:").grid(row=1, column=0)
-    tk.OptionMenu(root, image2_var, *images).grid(row=1, column=1)
+    tk.Button(root, text="Select Image 2", command=select_image2).grid(row=1, column=0)
+    tk.Entry(root, textvariable=image2_var, width=50).grid(row=1, column=1)
 
     tk.Button(root, text="Switch", command=on_switch).grid(row=2, column=0)
     tk.Button(root, text="Delete Image 1", command=on_delete1).grid(row=2, column=1)
@@ -102,8 +98,6 @@ def display_images():
 
     img2_label = tk.Label(root)
     img2_label.grid(row=3, column=2, columnspan=2)
-
-    update_image_display()
 
     root.mainloop()
 
